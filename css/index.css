@@ -38,6 +38,42 @@
     overflow: hidden;
 }
 
+.sea > tr {
+    width: 100%;
+}
+
+.sea > tr > td {
+    border: 1px solid grey;
+    min-width: 10%;
+    height: 10%;
+}
+
+.sea > tr > td:hover {
+    opacity: 0.5;
+    filter: alpha(opacity=50)
+}
+
+.cell{
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.dead {
+    background: #ff0000;
+}
+
+.miss {
+    background: #FFFFFF;
+}
+
+.boat {
+    background: #222222;
+}
+
+.water {
+    background: lightskyblue;
+}
+
 footer p{
     display: block;
     font-family: 'Comic Sans MS', cursive;
