@@ -28,6 +28,7 @@ function SeaBattle(targetContainer, edge) {
         cellIdPrefix: 'cell_',
         rowIdPrefix: 'row_'
     };
+	
 	//Список игроков
     var players = {
         Player: 'player',
@@ -40,6 +41,39 @@ function SeaBattle(targetContainer, edge) {
         ship: 0,
         water: -1,
         miss: 2
+    };
+	
+    //Завершена ли игра
+    var gameEnded = false;
+
+    //Поле с сообщениями
+    var messagesArea;
+
+    //Карты полей боя игроков
+    var computerMap, playerMap;
+
+    //Лог выстрелов компьютера
+    var computerShots;
+
+    //Имена игроков
+    var playerName, computerName;
+
+    //Список кораблей и их координат у игроков
+    var playerShips, computerShips;
+
+    //Список сторон, на которых можно расположить корабль
+    var possibleDirections = ['top', 'bottom', 'right', 'left'];
+
+    //Получаем html-текст поля ввода с именем игрока
+    var getPlayerNameInputHtml = function (id, defaultName, title, placeholder, autofocus) {
+        return $('<input>')
+            .attr('id', id)
+            .attr('type', 'text')
+            .attr('placeholder', placeholder)
+            .attr('title', title)
+            .attr('autofocus', autofocus ? 'true' : 'false')
+            .attr('value', defaultName)
+            .prop('outerHTML');
     };
 
 }
