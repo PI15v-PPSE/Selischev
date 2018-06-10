@@ -28,4 +28,18 @@ function SeaBattle(targetContainer, edge) {
         cellIdPrefix: 'cell_',
         rowIdPrefix: 'row_'
     };
+	//Список игроков
+    var players = {
+        Player: 'player',
+        Computer: 'computer'
+    };
+
+    //Статусы ячеек на карте
+    var cellType = {
+        dead: 1,
+        ship: 0,
+        water: -1,
+        miss: 2
+    };
+
 }
