@@ -75,5 +75,96 @@ function SeaBattle(targetContainer, edge) {
             .attr('value', defaultName)
             .prop('outerHTML');
     };
+	    //Сложение строк через разделитель
+    var concat = function (firstString, secondString, delimeter) {
+        return firstString.concat((delimeter || ' ') + secondString);
+    };
+    //Получаем игровое поле для указанного игрока
+    var getSeaArea = function (id, labelValue, inputId, inputDefaultValue, inputTitle, inputPlaceholder, inputAutoFocus) {
+        return $('<div>')
+            .attr('class', cssClasses.block)
+            .append(
+                $('<label>')
+                    .attr('for', id)
+                    .html(
+                        concat(
+                            labelValue,
+                            getPlayerNameInputHtml(
+                                inputId,
+                                inputDefaultValue,
+                                inputTitle,
+                                inputPlaceholder,
+                                inputAutoFocus)
+                        )
+                    )
+            )
+            .append(
+                $('<div>')
+                    .attr('id', id)
+                    .attr('class', concat(cssClasses.area, cssClasses.seaContainer))
+            );
+    };
+	
+    //Получаем поле с сообщениями
+    var getMessagesArea = function () {
+        return $('<div>')
+            .attr('class', cssClasses.block)
+            .append(
+                $('<label>')
+                    .attr('for', elementsIds.messagesLog)
+                    .html('Сообщения:')
+            )
+            .append(
+                $('<div>')
+                    .attr('id', elementsIds.messagesLog)
+                    .attr('class', concat(cssClasses.area, cssClasses.messagesLog))
+            );
+    };
+	
+    //Получить поле, содежащее игру
+    var getGameContainer = function () {
+        var gameContainer = $('<div>')
+            .attr('id', elementsIds.gameContainer)
+            .attr('class', cssClasses.container)
+            .append($('<h1>').html('Морской бой'));
+
+        gameContainer
+            .append(
+                getSeaArea(
+                    elementsIds.playerSeaContainer,
+                    'Ваше поле,',
+                    elementsIds.playerName,
+                    'Игрок',
+                    'Имя игрока',
+                    'Введите ваше имя',
+                    true
+                )
+            ).append(
+            getSeaArea(
+                elementsIds.computerSeaContainer,
+                'Противник',
+                elementsIds.computerName,
+                'Компьютер',
+                'Имя компьютера',
+                'Введите имя компьютера',
+                false
+            )
+        ).append(
+            getMessagesArea()
+        );
+
+        return gameContainer;
+    };
+    //Получить текущие дату и время в читаемой строке
+    var getCurrentDateTimeString = function () {
+        var delimiter = '.';
+        var currentDateTime = new Date();
+        return currentDateTime.getDate() + delimiter
+            + (currentDateTime.getMonth() + 1) + delimiter
+            + currentDateTime.getFullYear() + ' '
+            + currentDateTime.getHours() + delimiter
+            + currentDateTime.getMinutes();
+    };
+
 
 }
