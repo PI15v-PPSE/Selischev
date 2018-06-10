@@ -155,6 +155,16 @@ function SeaBattle(targetContainer, edge) {
 
         return gameContainer;
     };
+    //Получить текущие дату и время в читаемой строке
+    var getCurrentDateTimeString = function () {
+        var delimiter = '.';
+        var currentDateTime = new Date();
+        return currentDateTime.getDate() + delimiter
+            + (currentDateTime.getMonth() + 1) + delimiter
+            + currentDateTime.getFullYear() + ' '
+            + currentDateTime.getHours() + delimiter
+            + currentDateTime.getMinutes();
+    };
 
 
 }
