@@ -15,4 +15,17 @@ function SeaBattle(targetContainer, edge) {
         cellMiss: 'miss'
     };
 	
+    //Список идентификаторов
+    var elementsIds = {
+        gameContainer: 'game_container',
+        playerName: 'player_name',
+        computerName: 'computer_name',
+        playerSeaContainer: 'player_field',
+        playerSea: 'player_sea',
+        computerSeaContainer: 'computer_field',
+        computerSea: 'computer_sea',
+        messagesLog: 'messages',
+        cellIdPrefix: 'cell_',
+        rowIdPrefix: 'row_'
+    };
 }
