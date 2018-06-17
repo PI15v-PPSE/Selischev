@@ -121,7 +121,10 @@ function SeaBattle(targetContainer, edge) {
             );
     };
 	
+<<<<<<< HEAD
 	//Получить текущие дату и время в читаемой строке
+=======
+    //Получить текущие дату и время в читаемой строке
     var getCurrentDateTimeString = function () {
         var delimiter = '.';
         var currentDateTime = new Date();
@@ -176,6 +179,7 @@ function SeaBattle(targetContainer, edge) {
         return gameContainer;
     };
 
+<<<<<<< HEAD
     //Получить поле, содежащее игру
     var getGameContainer = function () {
         var gameContainer = $('<div>')
@@ -211,6 +215,8 @@ function SeaBattle(targetContainer, edge) {
         return gameContainer;
     };
 
+=======
+	
     //Отрисовать контейнер игры внутри указанного элемента
     var drawGameContainer = function (target) {
         target.empty();
@@ -324,7 +330,12 @@ function SeaBattle(targetContainer, edge) {
         }
         return true;
     };
+<<<<<<< HEAD
     return {
+=======
+	
+	    return {
+>>>>>>> lab4
 
         //Инициализация игры
         init: function () {
@@ -332,7 +343,11 @@ function SeaBattle(targetContainer, edge) {
             createMessage('Добро пожаловать в морской бой!');
         }
 
+<<<<<<< HEAD
 
     }
+=======
+>>>>>>> lab4
 
+    }
 }
