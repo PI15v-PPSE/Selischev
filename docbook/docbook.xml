@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://docbook.org/xml/5.0/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://docbook.org/xml/5.0/rng/docbook.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<article xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <info>
+        <title>Морской бой</title>
+        <author>
+            <orgname>ДонНТУ</orgname>
+            <address>
+<city>Донецк 2018</city>
+           </address>
+            <email>slonuk111@gmail.com</email>
+        </author>
+        <author>
+            <personname><firstname>Vyacheslav</firstname><surname>Selischev</surname></personname>
+        </author>
+    </info>
+    <sect1>
+        <title>О программе</title>
+        <para>Игра "Морской Бой" - игра для двух участников, в которой игроки по очереди называют координаты на неизвестной им карте соперника. Цель игрока — первым потопить все корабли противника. </para>
+        <informalfigure>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/img1.jpg" align="center" scale="50"
+                        annotations="Ввод имени "/>
+                </imageobject>
+            </mediaobject>
+            <para>Для того, что бы начать обменивать свои знания на деньги, клонируйте репозиторий <link
+                    xlink:href="https://github.com/PI15v-PPSE/milion-game"/>. После этого откройте в
+                браузере файл index.html</para>
+        </informalfigure>
+    </sect1>
+    <sect1>
+        <title>Сценарии использования</title>
+        <sect2>
+            <title>Сценарий 1 </title>
+            <orderedlist>
+                <listitem>
+                    <para>Попадание в цель<inlinemediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/img111.png" scale="50" align="center"/>
+                            </imageobject>
+                        </inlinemediaobject></para>
+                </listitem>
+                <listitem>
+                    <para>Промах<inlinemediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/img31.png" align="center" scale="50"/>
+                            </imageobject>
+                        </inlinemediaobject></para>
+                </listitem>
+                <listitem>
+                    <para>Победа<inlinemediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/img2.png" align="center" scale="50"/>
+                            </imageobject>
+                        </inlinemediaobject></para>
+                </listitem>
+            </orderedlist>
+            <para>Проверить направления для размещения судна в случайном порядке</para>
+            <programlistingco>
+                <areaspec/>
+                <programlisting linenumbering="numbered" language="javascript">
+				    var getRandomValidDirection = function (map, x, y, shipLength) {
+        var directionsArray = possibleDirections;
+        var currentDirection;
+        for (var i = directionsArray.length - 1; i >= 0; i--) {
+            var index = getRandomIntBetween(0, directionsArray.length - 1);
+            currentDirection = directionsArray[index];
+            directionsArray.slice(index, 1);
+            switch (currentDirection) {
+                case 'top':
+                    if (checkDirection(map, currentDirection, x, y, shipLength)) {
+                        return currentDirection;
+                    }
+                    break;
+                case 'bottom':
+                    if (checkDirection(map, currentDirection, x, y, shipLength)) {
+                        return currentDirection;
+                    }
+                    break;
+                case 'left':
+                    if (checkDirection(map, currentDirection, x, y, shipLength)) {
+                        return currentDirection;
+                    }
+                    break;
+                case 'right':
+                    if (checkDirection(map, currentDirection, x, y, shipLength)) {
+                        return currentDirection;
+                    }
+                    break;
+            }
+        }
+        return null;
+    };
+
+}</programlisting>
+            </programlistingco>
+            <para>Проверить, свободны ли ячейка и её окрестности от кораблей</para>
+                <programlisting>var cellRangeIsFree = function (map, cell_x, cell_y) {
+        if (map[cell_x] && map[cell_x][cell_y]) {
+            var coordinate_x, coordinate_y;
+            for (var x = -1; x <= 1; x++) {
+                for (var y = -1; y <= 1; y++) {
+                    coordinate_x = cell_x + x;
+                    coordinate_y = cell_y + y;
+                    if (map[coordinate_x]
+                        && map[coordinate_x][coordinate_y] == cellType.ship) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+    };
+</programlisting>
+            </programlistingco>
+            <para>Функция получения игрового поля для указанного игрока</para>
+        </sect2>
+                <programlisting>var getSeaArea = function (id, labelValue, inputId, inputDefaultValue, inputTitle, inputPlaceholder, inputAutoFocus) {
+        return $('<div>')
+            .attr('class', cssClasses.block)
+            .append(
+                $('<label>')
+                    .attr('for', id)
+                    .html(
+                        concat(
+                            labelValue,
+                            getPlayerNameInputHtml(
+                                inputId,
+                                inputDefaultValue,
+                                inputTitle,
+                                inputPlaceholder,
+                                inputAutoFocus)
+                        )
+                    )
+            )
+            .append(
+                $('<div>')
+                    .attr('id', id)
+                    .attr('class', concat(cssClasses.area, cssClasses.seaContainer))
+            );
+    };
+
+}</programlisting>
+    </sect1>
+</article>
