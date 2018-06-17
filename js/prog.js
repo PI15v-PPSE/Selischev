@@ -121,6 +121,26 @@ function SeaBattle(targetContainer, edge) {
             );
     };
 	
+    //Получить текущие дату и время в читаемой строке
+    var getCurrentDateTimeString = function () {
+        var delimiter = '.';
+        var currentDateTime = new Date();
+        return currentDateTime.getDate() + delimiter
+            + (currentDateTime.getMonth() + 1) + delimiter
+            + currentDateTime.getFullYear() + ' '
+            + currentDateTime.getHours() + delimiter
+            + currentDateTime.getMinutes();
+    };
+
+    //Добавить новое сообщение
+    var createMessage = function (text, colorClass) {
+        $('#' + elementsIds.messagesLog).prepend(
+            $('<p>')
+                .attr('class', concat(cssClasses.message, colorClass))
+                .html(concat(getCurrentDateTimeString(), text, ' : '))
+        );
+    };
+
     //Получить поле, содежащее игру
     var getGameContainer = function () {
         var gameContainer = $('<div>')
@@ -155,16 +175,130 @@ function SeaBattle(targetContainer, edge) {
 
         return gameContainer;
     };
-    //Получить текущие дату и время в читаемой строке
-    var getCurrentDateTimeString = function () {
-        var delimiter = '.';
-        var currentDateTime = new Date();
-        return currentDateTime.getDate() + delimiter
-            + (currentDateTime.getMonth() + 1) + delimiter
-            + currentDateTime.getFullYear() + ' '
-            + currentDateTime.getHours() + delimiter
-            + currentDateTime.getMinutes();
+
+	
+    //Отрисовать контейнер игры внутри указанного элемента
+    var drawGameContainer = function (target) {
+        target.empty();
+        target.append(getGameContainer());
     };
 
+    //Получить имя игрока
+    var getPlayerName = function () {
+        return $('#' + elementsIds.playerName).val();
+    };
 
+    //Получить имя компьтера
+    var getComputerName = function () {
+        return $('#' + elementsIds.computerName).val();
+    };
+
+    //Получить случайно целое число  в интервале
+    var getRandomIntBetween = function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
+
+    //Построить пустую карту с указанной шириной грани
+    var createEmptyShipsMap = function () {
+        var emptyMap = [];
+        for (var x = 1; x <= edge; x++) {
+            emptyMap[x] = [];
+            for (var y = 1; y <= edge; y++) {
+                emptyMap[x][y] = cellType.water;
+            }
+        }
+        return emptyMap;
+    };
+
+    //Проверить, свободны ли ячейка и её окрестности от кораблей
+    var cellRangeIsFree = function (map, cell_x, cell_y) {
+        if (map[cell_x] && map[cell_x][cell_y]) {
+            var coordinate_x, coordinate_y;
+            for (var x = -1; x <= 1; x++) {
+                for (var y = -1; y <= 1; y++) {
+                    coordinate_x = cell_x + x;
+                    coordinate_y = cell_y + y;
+                    if (map[coordinate_x]
+                        && map[coordinate_x][coordinate_y] == cellType.ship) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+    };
+
+    //Проверить возможность размещения судна в определенном направлении
+    var checkDirection = function (map, direction, x, y, shipLength) {
+        var lastCoordinate;
+        switch (direction) {
+            //1 буква переменной => 1 буква направления
+            case 'top':
+                lastCoordinate = x + shipLength;
+                if (lastCoordinate <= edge) {
+                    for (var tx = x; tx < lastCoordinate; tx++) {
+                        if (!cellRangeIsFree(map, tx, y)) {
+                            return false;
+                        }
+                    }
+                }
+                else {
+                    return false;
+                }
+                break;
+            case 'bottom':
+                lastCoordinate = x - shipLength;
+                if (lastCoordinate < 0) {
+                    for (var bx = x; bx > lastCoordinate; bx--) {
+                        if (!cellRangeIsFree(map, bx, y)) {
+                            return false;
+                        }
+                    }
+                }
+                else {
+                    return false;
+                }
+                break;
+            case 'left':
+                lastCoordinate = y - shipLength;
+                if (lastCoordinate < 0) {
+                    for (var ly = y; ly > lastCoordinate; ly--) {
+                        if (!cellRangeIsFree(map, x, ly)) {
+                            return false;
+                        }
+                    }
+                }
+                else {
+                    return false;
+
+                }
+                break;
+            case 'right':
+                lastCoordinate = y + shipLength;
+                if (lastCoordinate < edge) {
+                    for (var ry = y; ry < lastCoordinate; ry++) {
+                        if (!cellRangeIsFree(map, x, ry)) {
+                            return false;
+                        }
+                    }
+                }
+                else {
+                    return false;
+                }
+                break;
+        }
+        return true;
+    };
+	
+	    return {
+
+        //Инициализация игры
+        init: function () {
+            drawGameContainer(targetContainer);
+            createMessage('Добро пожаловать в морской бой!');
+        }
+
+
+    }
 }
