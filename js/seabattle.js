@@ -515,9 +515,9 @@ function SeaBattle(targetContainer, edge) {
         if (target == players.Player) {
             shipsCount = playerShips.length;
             playerShips = _hitShip(playerShips, x, y);
-            if (playerMap[x][y] == cellType.water)
+            if (playerMap[x][y] == cellType.water){
                 playerMap[x][y] = cellType.miss;
-            else if (playerMap[x][y] == cellType.ship)
+            }else if (playerMap[x][y] == cellType.ship)
                 playerMap[x][y] = cellType.dead;
             isDead = shipsCount != playerShips.length;
             if (isDead) {
@@ -535,9 +535,9 @@ function SeaBattle(targetContainer, edge) {
         } else if (target == players.Computer) {
             shipsCount = computerShips.length;
             computerShips = _hitShip(computerShips, x, y);
-            if (computerMap[x][y] == cellType.water)
+            if (computerMap[x][y] == cellType.water){
                 computerMap[x][y] = cellType.miss;
-            else if (computerMap[x][y] == cellType.ship)
+            }else if (computerMap[x][y] == cellType.ship)
                 computerMap[x][y] = cellType.dead;
             isDead = shipsCount != computerShips.length;
             if (isDead) {
