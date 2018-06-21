@@ -1,51 +1,61 @@
-'use strict';
-
-//TODO: Сделать выстрелы компьтера умнее
-
-//Новая версия j-Query не поддерживает addClass :(
+/**
+ * Игра
+ *
+ * Класс описывает игровой процесс.
+ *
+ * @author slschv
+ * @version 1
+ * @copyright GNU Public License
+ */
 function SeaBattle(targetContainer, edge) {
-    //Список css-классов
+    /**
+     * Первая игровая кость
+     *
+     *Cписок css-классов
+     *
+     * @var {int} cssClasses
+     */
     var cssClasses = {
-        container: 'container',
-        block: 'block',
-        area: 'area',
-        seaContainer: 'seaContainer',
-        sea: 'sea',
-        messagesLog: 'messages',
-        message: 'message',
-        cell: 'cell',
-        cellDead: 'dead',
-        cellBoat: 'boat',
-        cellWater: 'water',
-        cellMiss: 'miss'
+        container: 'container'
+        , block: 'block'
+        , area: 'area'
+        , seaContainer: 'seaContainer'
+        , sea: 'sea'
+        , messagesLog: 'messages'
+        , message: 'message'
+        , cell: 'cell'
+        , cellDead: 'dead'
+        , cellBoat: 'boat'
+        , cellWater: 'water'
+        , cellMiss: 'miss'
     };
 
     //Список идентификаторов
     var elementsIds = {
-        gameContainer: 'game_container',
-        playerName: 'player_name',
-        computerName: 'computer_name',
-        playerSeaContainer: 'player_field',
-        playerSea: 'player_sea',
-        computerSeaContainer: 'computer_field',
-        computerSea: 'computer_sea',
-        messagesLog: 'messages',
-        cellIdPrefix: 'cell_',
-        rowIdPrefix: 'row_'
+        gameContainer: 'game_container'
+        , playerName: 'player_name'
+        , computerName: 'computer_name'
+        , playerSeaContainer: 'player_field'
+        , playerSea: 'player_sea'
+        , computerSeaContainer: 'computer_field'
+        , computerSea: 'computer_sea'
+        , messagesLog: 'messages'
+        , cellIdPrefix: 'cell_'
+        , rowIdPrefix: 'row_'
     };
 
     //Список игроков
     var players = {
-        Player: 'player',
-        Computer: 'computer'
+        Player: 'player'
+        , Computer: 'computer'
     };
 
     //Статусы ячеек на карте
     var cellType = {
-        dead: 1,
-        ship: 0,
-        water: -1,
-        miss: 2
+        dead: 1
+        , ship: 0
+        , water: -1
+        , miss: 2
     };
 
     //Завершена ли игра
@@ -92,23 +102,23 @@ function SeaBattle(targetContainer, edge) {
             .attr('class', cssClasses.block)
             .append(
                 $('<label>')
-                    .attr('for', id)
-                    .html(
-                        concat(
-                            labelValue,
-                            getPlayerNameInputHtml(
-                                inputId,
-                                inputDefaultValue,
-                                inputTitle,
-                                inputPlaceholder,
-                                inputAutoFocus)
-                        )
+                .attr('for', id)
+                .html(
+                    concat(
+                        labelValue
+                        , getPlayerNameInputHtml(
+                            inputId
+                            , inputDefaultValue
+                            , inputTitle
+                            , inputPlaceholder
+                            , inputAutoFocus)
                     )
+                )
             )
             .append(
                 $('<div>')
-                    .attr('id', id)
-                    .attr('class', concat(cssClasses.area, cssClasses.seaContainer))
+                .attr('id', id)
+                .attr('class', concat(cssClasses.area, cssClasses.seaContainer))
             );
     };
 
@@ -118,13 +128,13 @@ function SeaBattle(targetContainer, edge) {
             .attr('class', cssClasses.block)
             .append(
                 $('<label>')
-                    .attr('for', elementsIds.messagesLog)
-                    .html('Сообщения:')
+                .attr('for', elementsIds.messagesLog)
+                .html('Сообщения:')
             )
             .append(
                 $('<div>')
-                    .attr('id', elementsIds.messagesLog)
-                    .attr('class', concat(cssClasses.area, cssClasses.messagesLog))
+                .attr('id', elementsIds.messagesLog)
+                .attr('class', concat(cssClasses.area, cssClasses.messagesLog))
             );
     };
 
@@ -132,20 +142,21 @@ function SeaBattle(targetContainer, edge) {
     var getCurrentDateTimeString = function () {
         var delimiter = '.';
         var currentDateTime = new Date();
-        return currentDateTime.getDate() + delimiter
-            + (currentDateTime.getMonth() + 1) + delimiter
-            + currentDateTime.getFullYear() + ' '
-            + currentDateTime.getHours() + delimiter
-            + currentDateTime.getMinutes();
+        return currentDateTime.getDate() + delimiter +
+            (currentDateTime.getMonth() + 1) + delimiter +
+            currentDateTime.getFullYear() + ' ' +
+            currentDateTime.getHours() + delimiter +
+            currentDateTime.getMinutes();
     };
 
     //Добавить новое сообщение
     var createMessage = function (text, colorClass) {
-        $('#' + elementsIds.messagesLog).prepend(
-            $('<p>')
+        $('#' + elementsIds.messagesLog)
+            .prepend(
+                $('<p>')
                 .attr('class', concat(cssClasses.message, colorClass))
                 .html(concat(getCurrentDateTimeString(), text, ' : '))
-        );
+            );
     };
 
     //Получить поле, содежащее игру
@@ -153,32 +164,35 @@ function SeaBattle(targetContainer, edge) {
         var gameContainer = $('<div>')
             .attr('id', elementsIds.gameContainer)
             .attr('class', cssClasses.container)
-            .append($('<h1>').html('Морской бой'));
+            .append($('<h1>')
+                .html('Морской бой'));
 
         gameContainer
             .append(
                 getSeaArea(
-                    elementsIds.playerSeaContainer,
-                    'Ваше поле,',
-                    elementsIds.playerName,
-                    'Игрок',
-                    'Имя игрока',
-                    'Введите ваше имя',
-                    true
+                    elementsIds.playerSeaContainer
+                    , 'Ваше поле,'
+                    , elementsIds.playerName
+                    , 'Игрок'
+                    , 'Имя игрока'
+                    , 'Введите ваше имя'
+                    , true
                 )
-            ).append(
-            getSeaArea(
-                elementsIds.computerSeaContainer,
-                'Противник',
-                elementsIds.computerName,
-                'Компьютер',
-                'Имя компьютера',
-                'Введите имя компьютера',
-                false
             )
-        ).append(
-            getMessagesArea()
-        );
+            .append(
+                getSeaArea(
+                    elementsIds.computerSeaContainer
+                    , 'Противник'
+                    , elementsIds.computerName
+                    , 'Компьютер'
+                    , 'Имя компьютера'
+                    , 'Введите имя компьютера'
+                    , false
+                )
+            )
+            .append(
+                getMessagesArea()
+            );
 
         return gameContainer;
     };
@@ -191,12 +205,14 @@ function SeaBattle(targetContainer, edge) {
 
     //Получить имя игрока
     var getPlayerName = function () {
-        return $('#' + elementsIds.playerName).val();
+        return $('#' + elementsIds.playerName)
+            .val();
     };
 
     //Получить имя компьтера
     var getComputerName = function () {
-        return $('#' + elementsIds.computerName).val();
+        return $('#' + elementsIds.computerName)
+            .val();
     };
 
     //Получить случайно целое число  в интервале
@@ -224,8 +240,8 @@ function SeaBattle(targetContainer, edge) {
                 for (var y = -1; y <= 1; y++) {
                     coordinate_x = cell_x + x;
                     coordinate_y = cell_y + y;
-                    if (map[coordinate_x]
-                        && map[coordinate_x][coordinate_y] == cellType.ship) {
+                    if (map[coordinate_x] &&
+                        map[coordinate_x][coordinate_y] == cellType.ship) {
                         return false;
                     }
                 }
@@ -240,59 +256,55 @@ function SeaBattle(targetContainer, edge) {
         var lastCoordinate;
         switch (direction) {
             //1 буква переменной => 1 буква направления
-            case 'top':
-                lastCoordinate = x + shipLength;
-                if (lastCoordinate <= edge) {
-                    for (var tx = x; tx < lastCoordinate; tx++) {
-                        if (!cellRangeIsFree(map, tx, y)) {
-                            return false;
-                        }
+        case 'top':
+            lastCoordinate = x + shipLength;
+            if (lastCoordinate <= edge) {
+                for (var tx = x; tx < lastCoordinate; tx++) {
+                    if (!cellRangeIsFree(map, tx, y)) {
+                        return false;
                     }
                 }
-                else {
-                    return false;
-                }
-                break;
-            case 'bottom':
-                lastCoordinate = x - shipLength;
-                if (lastCoordinate < 0) {
-                    for (var bx = x; bx > lastCoordinate; bx--) {
-                        if (!cellRangeIsFree(map, bx, y)) {
-                            return false;
-                        }
+            } else {
+                return false;
+            }
+            break;
+        case 'bottom':
+            lastCoordinate = x - shipLength;
+            if (lastCoordinate < 0) {
+                for (var bx = x; bx > lastCoordinate; bx--) {
+                    if (!cellRangeIsFree(map, bx, y)) {
+                        return false;
                     }
                 }
-                else {
-                    return false;
-                }
-                break;
-            case 'left':
-                lastCoordinate = y - shipLength;
-                if (lastCoordinate < 0) {
-                    for (var ly = y; ly > lastCoordinate; ly--) {
-                        if (!cellRangeIsFree(map, x, ly)) {
-                            return false;
-                        }
+            } else {
+                return false;
+            }
+            break;
+        case 'left':
+            lastCoordinate = y - shipLength;
+            if (lastCoordinate < 0) {
+                for (var ly = y; ly > lastCoordinate; ly--) {
+                    if (!cellRangeIsFree(map, x, ly)) {
+                        return false;
                     }
                 }
-                else {
-                    return false;
+            } else {
+                return false;
 
-                }
-                break;
-            case 'right':
-                lastCoordinate = y + shipLength;
-                if (lastCoordinate < edge) {
-                    for (var ry = y; ry < lastCoordinate; ry++) {
-                        if (!cellRangeIsFree(map, x, ry)) {
-                            return false;
-                        }
+            }
+            break;
+        case 'right':
+            lastCoordinate = y + shipLength;
+            if (lastCoordinate < edge) {
+                for (var ry = y; ry < lastCoordinate; ry++) {
+                    if (!cellRangeIsFree(map, x, ry)) {
+                        return false;
                     }
                 }
-                else {
-                    return false;
-                }
-                break;
+            } else {
+                return false;
+            }
+            break;
         }
         return true;
     };
@@ -306,26 +318,26 @@ function SeaBattle(targetContainer, edge) {
             currentDirection = directionsArray[index];
             directionsArray.slice(index, 1);
             switch (currentDirection) {
-                case 'top':
-                    if (checkDirection(map, currentDirection, x, y, shipLength)) {
-                        return currentDirection;
-                    }
-                    break;
-                case 'bottom':
-                    if (checkDirection(map, currentDirection, x, y, shipLength)) {
-                        return currentDirection;
-                    }
-                    break;
-                case 'left':
-                    if (checkDirection(map, currentDirection, x, y, shipLength)) {
-                        return currentDirection;
-                    }
-                    break;
-                case 'right':
-                    if (checkDirection(map, currentDirection, x, y, shipLength)) {
-                        return currentDirection;
-                    }
-                    break;
+            case 'top':
+                if (checkDirection(map, currentDirection, x, y, shipLength)) {
+                    return currentDirection;
+                }
+                break;
+            case 'bottom':
+                if (checkDirection(map, currentDirection, x, y, shipLength)) {
+                    return currentDirection;
+                }
+                break;
+            case 'left':
+                if (checkDirection(map, currentDirection, x, y, shipLength)) {
+                    return currentDirection;
+                }
+                break;
+            case 'right':
+                if (checkDirection(map, currentDirection, x, y, shipLength)) {
+                    return currentDirection;
+                }
+                break;
             }
         }
         return null;
@@ -336,35 +348,36 @@ function SeaBattle(targetContainer, edge) {
         var lastCoordinate;
         var ship = [];
         switch (direction) {
-            case 'top':
-                lastCoordinate = x + shipLength;
-                for (var tx = x; tx < lastCoordinate; tx++) {
-                    ship.push([tx, y]);
-                    map[tx][y] = cellType.ship;
-                }
-                break;
-            case 'bottom':
-                lastCoordinate = x - shipLength;
-                for (var bx = x; bx > lastCoordinate; bx--) {
-                    ship.push([bx, y]);
-                    map[bx][y] = cellType.ship;
-                }
-                break;
-            case 'left':
-                lastCoordinate = y - shipLength;
-                for (var ly = y; ly > lastCoordinate; ly--) {
-                    ship.push([x, ly]);
-                    map[x][ly] = cellType.ship;
-                }
-                break;
-            case 'right':
-                lastCoordinate = y + shipLength;
-                for (var ry = y; ry < lastCoordinate; ry++) {
-                    ship.push([x, ry]);
-                    map[x][ry] = cellType.ship;
-                }
-                break;
-            case 'single': {
+        case 'top':
+            lastCoordinate = x + shipLength;
+            for (var tx = x; tx < lastCoordinate; tx++) {
+                ship.push([tx, y]);
+                map[tx][y] = cellType.ship;
+            }
+            break;
+        case 'bottom':
+            lastCoordinate = x - shipLength;
+            for (var bx = x; bx > lastCoordinate; bx--) {
+                ship.push([bx, y]);
+                map[bx][y] = cellType.ship;
+            }
+            break;
+        case 'left':
+            lastCoordinate = y - shipLength;
+            for (var ly = y; ly > lastCoordinate; ly--) {
+                ship.push([x, ly]);
+                map[x][ly] = cellType.ship;
+            }
+            break;
+        case 'right':
+            lastCoordinate = y + shipLength;
+            for (var ry = y; ry < lastCoordinate; ry++) {
+                ship.push([x, ry]);
+                map[x][ry] = cellType.ship;
+            }
+            break;
+        case 'single':
+            {
                 ship.push([x, y]);
                 map[x][y] = cellType.ship;
                 break;
@@ -376,8 +389,7 @@ function SeaBattle(targetContainer, edge) {
                 playerShips = [];
             }
             playerShips.push(ship);
-        }
-        else {
+        } else {
             if (!computerShips) {
                 computerShips = [];
             }
@@ -400,16 +412,13 @@ function SeaBattle(targetContainer, edge) {
                             var direction = getRandomValidDirection(map, x, y, shipLength);
                             if (direction) {
                                 map = placeShipToMap(map, direction, x, y, shipLength, owner);
-                            }
-                            else {
+                            } else {
                                 notReady = true;
                             }
-                        }
-                        else {
+                        } else {
                             map = placeShipToMap(map, 'single', x, y, shipLength, owner);
                         }
-                    }
-                    else {
+                    } else {
                         notReady = true;
                     }
                 }
@@ -422,11 +431,12 @@ function SeaBattle(targetContainer, edge) {
     //Найти ячейку с кораблем и удалить её из списка ячеек кораблей
     var _hitShip = function (ships, x, y) {
         var bufferShips = ships;
-        var indexCoordinateX = 0, indexCoordinateY = 1;
+        var indexCoordinateX = 0
+            , indexCoordinateY = 1;
         for (var i = 0; i < bufferShips.length; i++) {
             for (var shipCoordinateIndex = 0; shipCoordinateIndex < bufferShips[i].length; shipCoordinateIndex++) {
-                if (bufferShips[i][shipCoordinateIndex][indexCoordinateX] == x
-                    && bufferShips[i][shipCoordinateIndex][indexCoordinateY] == y) {
+                if (bufferShips[i][shipCoordinateIndex][indexCoordinateX] == x &&
+                    bufferShips[i][shipCoordinateIndex][indexCoordinateY] == y) {
                     //Удаляем координату корабля
                     bufferShips[i].splice(shipCoordinateIndex, 1);
                     //Если ячеек не соталось - удаляем массив - корабль
@@ -480,21 +490,20 @@ function SeaBattle(targetContainer, edge) {
                         if (map[coordinate_x][coordinate_y] == cellType.ship || map[coordinate_x][coordinate_y] == cellType.dead) {
                             var coordinate;
                             if (y == 0) {
-                                coordinate= coordinate_x;
-                               while (coordinate > 0 && coordinate <= 10
-                                   && (map[coordinate][coordinate_y] == cellType.ship || map[coordinate][coordinate_y] == cellType.dead) )
-                               {
-                                   coordinates.push([coordinate, coordinate_y]);
-                                   if (x > 0) coordinate++; else coordinate--;
-                               }
-                            }
-                            else {
+                                coordinate = coordinate_x;
+                                while (coordinate > 0 && coordinate <= 10 &&
+                                    (map[coordinate][coordinate_y] == cellType.ship || map[coordinate][coordinate_y] == cellType.dead)) {
+                                    coordinates.push([coordinate, coordinate_y]);
+                                    if (x > 0) coordinate++;
+                                    else coordinate--;
+                                }
+                            } else {
                                 coordinate = coordinate_y;
-                                while (coordinate > 0 && coordinate <= 10
-                                && (map[coordinate_x][coordinate] == cellType.ship || map[coordinate_x][coordinate] == cellType.dead) )
-                                {
+                                while (coordinate > 0 && coordinate <= 10 &&
+                                    (map[coordinate_x][coordinate] == cellType.ship || map[coordinate_x][coordinate] == cellType.dead)) {
                                     coordinates.push([coordinate_x, coordinate]);
-                                    if (x > 0) coordinate++; else coordinate--;
+                                    if (x > 0) coordinate++;
+                                    else coordinate--;
                                 }
                             }
                         }
@@ -522,11 +531,12 @@ function SeaBattle(targetContainer, edge) {
         if (target == players.Player) {
             shipsCount = playerShips.length;
             playerShips = _hitShip(playerShips, x, y);
-            if (playerMap[x][y] == cellType.water)
+            if (playerMap[x][y] == cellType.water) {
                 playerMap[x][y] = cellType.miss;
-            else if (playerMap[x][y] == cellType.ship)
+            } else if (playerMap[x][y] == cellType.ship) {
                 playerMap[x][y] = cellType.dead;
-            isDead = shipsCount != playerShips.length;
+                isDead = shipsCount != playerShips.length;
+            }
             if (isDead) {
                 message = 'Наш корабль уничтожен!';
                 createMessage(message);
@@ -539,15 +549,15 @@ function SeaBattle(targetContainer, edge) {
                 }
             }
             return isDead;
-        }
-        else if (target == players.Computer) {
+        } else if (target == players.Computer) {
             shipsCount = computerShips.length;
             computerShips = _hitShip(computerShips, x, y);
-            if (computerMap[x][y] == cellType.water)
+            if (computerMap[x][y] == cellType.water) {
                 computerMap[x][y] = cellType.miss;
-            else if (computerMap[x][y] == cellType.ship)
+            } else if (computerMap[x][y] == cellType.ship) {
                 computerMap[x][y] = cellType.dead;
-            isDead = shipsCount != computerShips.length;
+                isDead = shipsCount != computerShips.length;
+            }
             if (isDead) {
                 message = 'Мы уничтожили корабль противника!';
                 createMessage(message);
@@ -565,7 +575,7 @@ function SeaBattle(targetContainer, edge) {
 
     //Выстрел компьтера
     var computerShot = function () {
-        var targets = $('table#'+elementsIds.playerSea+' td:not(.' + cssClasses.miss + ', .'+cssClasses.dead+')[data-owner="' + players.Player + '"]');
+        var targets = $('table#' + elementsIds.playerSea + ' td:not(.' + cssClasses.miss + ', .' + cssClasses.dead + ')[data-owner="' + players.Player + '"]');
         var targetIndex = getRandomIntBetween(0, targets.length - 1);
         var target = $(targets[targetIndex]);
         var x, y;
@@ -587,16 +597,13 @@ function SeaBattle(targetContainer, edge) {
 
                     //Ответный выстрел компьтера
                     setTimeout(computerShot(), 5000)
-                }
-                else {
+                } else {
                     createMessage('Капитан, мы уже сюда стреляли! Предлагаю изменить координаты.');
                 }
-            }
-            else {
+            } else {
                 createMessage('Капитан, это наше поле :с');
             }
-        }
-        else {
+        } else {
             createMessage('Игра завершена! Пожалуйста, обновите страницу.');
         }
     };
@@ -606,8 +613,7 @@ function SeaBattle(targetContainer, edge) {
         if (playerMap[x][y] == cellType.dead) {
             createMessage(getComputerName() + ' попал в ваш корабль! ' + getCellName(x, y) + ' горит!');
             cell.attr('class', cssClasses.cellDead);
-        }
-        else if (playerMap[x][y] == cellType.miss) {
+        } else if (playerMap[x][y] == cellType.miss) {
             playerMap[x][y] = cellType.miss;
             createMessage(getComputerName() + ' промахнулся в ' + getCellName(x, y) + '! Так держать, капитан!');
             cell.attr('class', cssClasses.cellMiss);
@@ -619,8 +625,7 @@ function SeaBattle(targetContainer, edge) {
         if (computerMap[x][y] == cellType.dead) {
             createMessage('Капитан, ' + getPlayerName() + ', цель ' + getCellName(x, y) + ' поражена!');
             cell.attr('class', cssClasses.cellDead);
-        }
-        else if (computerMap[x][y] == cellType.miss) {
+        } else if (computerMap[x][y] == cellType.miss) {
             createMessage('Капитан, ' + getPlayerName() + ', промах по ' + getCellName(x, y) + '. Противник разгадал наши планы.');
             cell.attr('class', cssClasses.cellMiss);
         }
@@ -631,8 +636,7 @@ function SeaBattle(targetContainer, edge) {
         var cell = $('td[data-owner="' + target + '"][data-x="' + x + '"][data-y="' + y + '"]');
         if (target == players.Player) {
             drawComputerShot(cell, x, y);
-        }
-        else if (target == players.Computer) {
+        } else if (target == players.Computer) {
             drawPlayerShot(cell, x, y);
         }
     };
@@ -657,18 +661,18 @@ function SeaBattle(targetContainer, edge) {
         });
 
         switch (type) {
-            case cssClasses.cellWater:
-                cell.attr('class', concat(cssClasses.cell, cssClasses.cellWater));
-                break;
-            case cssClasses.cellMiss:
-                cell.attr('class', concat(cssClasses.cell, cssClasses.cellMiss));
-                break;
-            case cssClasses.cellBoat:
-                cell.attr('class', concat(cssClasses.cell, cssClasses.cellBoat));
-                break;
-            case cssClasses.cellDead:
-                cell.attr('class', concat(cssClasses.cell, cssClasses.cellDead));
-                break;
+        case cssClasses.cellWater:
+            cell.attr('class', concat(cssClasses.cell, cssClasses.cellWater));
+            break;
+        case cssClasses.cellMiss:
+            cell.attr('class', concat(cssClasses.cell, cssClasses.cellMiss));
+            break;
+        case cssClasses.cellBoat:
+            cell.attr('class', concat(cssClasses.cell, cssClasses.cellBoat));
+            break;
+        case cssClasses.cellDead:
+            cell.attr('class', concat(cssClasses.cell, cssClasses.cellDead));
+            break;
         }
         return cell;
     };
@@ -681,17 +685,16 @@ function SeaBattle(targetContainer, edge) {
 
         for (var x = 1; x < map.length; x++) {
 
-            var tr = $('<tr>').attr('id', concat(elementsIds.rowIdPrefix, x, ''));
+            var tr = $('<tr>')
+                .attr('id', concat(elementsIds.rowIdPrefix, x, ''));
             for (var y = 1; y < map[x].length; y++) {
                 if (showBoats) {
                     if (map[x][y] == 0) {
                         tr.append(_getTableCell(x, y, cssClasses.cellBoat, owner));
-                    }
-                    else {
+                    } else {
                         tr.append(_getTableCell(x, y, cssClasses.cellWater, owner));
                     }
-                }
-                else {
+                } else {
                     tr.append(_getTableCell(x, y, cssClasses.cellWater, owner));
                 }
             }
