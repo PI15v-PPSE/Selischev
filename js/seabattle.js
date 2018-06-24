@@ -1,20 +1,10 @@
-/**
- * Игра
- *
- * Класс описывает игровой процесс.
- *
- * @author slschv
- * @version 1
- * @copyright GNU Public License
- */
+'use strict';
+
+//TODO: Сделать выстрелы компьтера умнее
+
+//Новая версия j-Query не поддерживает addClass :(
 function SeaBattle(targetContainer, edge) {
-    /**
-     * Первая игровая кость
-     *
-     *Cписок css-классов
-     *
-     * @var {int} cssClasses
-     */
+    //Список css-классов
     var cssClasses = {
         container: 'container'
         , block: 'block'
@@ -80,7 +70,7 @@ function SeaBattle(targetContainer, edge) {
     var possibleDirections = ['top', 'bottom', 'right', 'left'];
 
     //Получаем html-текст поля ввода с именем игрока
-    var getPlayerNameInputHtml = function(id, defaultName, title, placeholder, autofocus) {
+    var getPlayerNameInputHtml = function (id, defaultName, title, placeholder, autofocus) {
         return $('<input>')
             .attr('id', id)
             .attr('type', 'text')
@@ -92,12 +82,12 @@ function SeaBattle(targetContainer, edge) {
     };
 
     //Сложение строк через разделитель
-    var concat = function(firstString, secondString, delimeter) {
+    var concat = function (firstString, secondString, delimeter) {
         return firstString.concat((delimeter || ' ') + secondString);
     };
 
     //Получаем игровое поле для указанного игрока
-    var getSeaArea = function(id, labelValue, inputId, inputDefaultValue, inputTitle, inputPlaceholder, inputAutoFocus) {
+    var getSeaArea = function (id, labelValue, inputId, inputDefaultValue, inputTitle, inputPlaceholder, inputAutoFocus) {
         return $('<div>')
             .attr('class', cssClasses.block)
             .append(
@@ -105,7 +95,6 @@ function SeaBattle(targetContainer, edge) {
                 .attr('for', id)
                 .html(
                     concat(
-<<<<<<< HEAD
                         labelValue
                         , getPlayerNameInputHtml(
                             inputId
@@ -113,15 +102,6 @@ function SeaBattle(targetContainer, edge) {
                             , inputTitle
                             , inputPlaceholder
                             , inputAutoFocus)
-=======
-                        labelValue,
-                        getPlayerNameInputHtml(
-                            inputId,
-                            inputDefaultValue,
-                            inputTitle,
-                            inputPlaceholder,
-                            inputAutoFocus)
->>>>>>> c08beeb3edd0cf0349c9b6a2a91a07acea46d38b
                     )
                 )
             )
@@ -133,7 +113,7 @@ function SeaBattle(targetContainer, edge) {
     };
 
     //Получаем поле с сообщениями
-    var getMessagesArea = function() {
+    var getMessagesArea = function () {
         return $('<div>')
             .attr('class', cssClasses.block)
             .append(
@@ -149,7 +129,7 @@ function SeaBattle(targetContainer, edge) {
     };
 
     //Получить текущие дату и время в читаемой строке
-    var getCurrentDateTimeString = function() {
+    var getCurrentDateTimeString = function () {
         var delimiter = '.';
         var currentDateTime = new Date();
         return currentDateTime.getDate() + delimiter +
@@ -160,7 +140,6 @@ function SeaBattle(targetContainer, edge) {
     };
 
     //Добавить новое сообщение
-<<<<<<< HEAD
     var createMessage = function (text, colorClass) {
         $('#' + elementsIds.messagesLog)
             .prepend(
@@ -168,18 +147,10 @@ function SeaBattle(targetContainer, edge) {
                 .attr('class', concat(cssClasses.message, colorClass))
                 .html(concat(getCurrentDateTimeString(), text, ' : '))
             );
-=======
-    var createMessage = function(text, colorClass) {
-        $('#' + elementsIds.messagesLog).prepend(
-            $('<p>')
-            .attr('class', concat(cssClasses.message, colorClass))
-            .html(concat(getCurrentDateTimeString(), text, ' : '))
-        );
->>>>>>> c08beeb3edd0cf0349c9b6a2a91a07acea46d38b
     };
 
     //Получить поле, содежащее игру
-    var getGameContainer = function() {
+    var getGameContainer = function () {
         var gameContainer = $('<div>')
             .attr('id', elementsIds.gameContainer)
             .attr('class', cssClasses.container)
@@ -208,22 +179,8 @@ function SeaBattle(targetContainer, edge) {
                     , 'Введите имя компьютера'
                     , false
                 )
-<<<<<<< HEAD
             )
             .append(
-=======
-            ).append(
-                getSeaArea(
-                    elementsIds.computerSeaContainer,
-                    'Противник',
-                    elementsIds.computerName,
-                    'Компьютер',
-                    'Имя компьютера',
-                    'Введите имя компьютера',
-                    false
-                )
-            ).append(
->>>>>>> c08beeb3edd0cf0349c9b6a2a91a07acea46d38b
                 getMessagesArea()
             );
 
@@ -231,13 +188,12 @@ function SeaBattle(targetContainer, edge) {
     };
 
     //Отрисовать контейнер игры внутри указанного элемента
-    var drawGameContainer = function(target) {
+    var drawGameContainer = function (target) {
         target.empty();
         target.append(getGameContainer());
     };
 
     //Получить имя игрока
-<<<<<<< HEAD
     var getPlayerName = function () {
         return $('#' + elementsIds.playerName)
             .val();
@@ -247,15 +203,6 @@ function SeaBattle(targetContainer, edge) {
     var getComputerName = function () {
         return $('#' + elementsIds.computerName)
             .val();
-=======
-    var getPlayerName = function() {
-        return $('#' + elementsIds.playerName).val();
-    };
-
-    //Получить имя компьтера
-    var getComputerName = function() {
-        return $('#' + elementsIds.computerName).val();
->>>>>>> c08beeb3edd0cf0349c9b6a2a91a07acea46d38b
     };
 
     //Получить случайно целое число  в интервале
@@ -264,7 +211,7 @@ function SeaBattle(targetContainer, edge) {
     };
 
     //Построить пустую карту с указанной шириной грани
-    var createEmptyShipsMap = function() {
+    var createEmptyShipsMap = function () {
         var emptyMap = [];
         for (var x = 1; x <= edge; x++) {
             emptyMap[x] = [];
@@ -276,7 +223,7 @@ function SeaBattle(targetContainer, edge) {
     };
 
     //Проверить, свободны ли ячейка и её окрестности от кораблей
-    var cellRangeIsFree = function(map, cell_x, cell_y) {
+    var cellRangeIsFree = function (map, cell_x, cell_y) {
         if (map[cell_x] && map[cell_x][cell_y]) {
             var coordinate_x, coordinate_y;
             for (var x = -1; x <= 1; x++) {
@@ -295,7 +242,7 @@ function SeaBattle(targetContainer, edge) {
     };
 
     //Проверить возможность размещения судна в определенном направлении
-    var checkDirection = function(map, direction, x, y, shipLength) {
+    var checkDirection = function (map, direction, x, y, shipLength) {
         var lastCoordinate;
         switch (direction) {
             //1 буква переменной => 1 буква направления
@@ -306,7 +253,6 @@ function SeaBattle(targetContainer, edge) {
                     if (!cellRangeIsFree(map, tx, y)) {
                         return false;
                     }
-<<<<<<< HEAD
                 }
             } else {
                 return false;
@@ -334,34 +280,6 @@ function SeaBattle(targetContainer, edge) {
                 }
             } else {
                 return false;
-=======
-                } else {
-                    return false;
-                }
-                break;
-            case 'bottom':
-                lastCoordinate = x - shipLength;
-                if (lastCoordinate < 0) {
-                    for (var bx = x; bx > lastCoordinate; bx--) {
-                        if (!cellRangeIsFree(map, bx, y)) {
-                            return false;
-                        }
-                    }
-                } else {
-                    return false;
-                }
-                break;
-            case 'left':
-                lastCoordinate = y - shipLength;
-                if (lastCoordinate < 0) {
-                    for (var ly = y; ly > lastCoordinate; ly--) {
-                        if (!cellRangeIsFree(map, x, ly)) {
-                            return false;
-                        }
-                    }
-                } else {
-                    return false;
->>>>>>> c08beeb3edd0cf0349c9b6a2a91a07acea46d38b
 
             }
             break;
@@ -372,24 +290,17 @@ function SeaBattle(targetContainer, edge) {
                     if (!cellRangeIsFree(map, x, ry)) {
                         return false;
                     }
-<<<<<<< HEAD
                 }
             } else {
                 return false;
             }
             break;
-=======
-                } else {
-                    return false;
-                }
-                break;
->>>>>>> c08beeb3edd0cf0349c9b6a2a91a07acea46d38b
         }
         return true;
     };
 
     //Проверить направления для размещения судна в случайном порядке
-    var getRandomValidDirection = function(map, x, y, shipLength) {
+    var getRandomValidDirection = function (map, x, y, shipLength) {
         var directionsArray = possibleDirections;
         var currentDirection;
         for (var i = directionsArray.length - 1; i >= 0; i--) {
@@ -397,39 +308,6 @@ function SeaBattle(targetContainer, edge) {
             currentDirection = directionsArray[index];
             directionsArray.slice(index, 1);
             switch (currentDirection) {
-<<<<<<< HEAD
-=======
-                case 'top':
-                    if (checkDirection(map, currentDirection, x, y, shipLength)) {
-                        return currentDirection;
-                    }
-                    break;
-                case 'bottom':
-                    if (checkDirection(map, currentDirection, x, y, shipLength)) {
-                        return currentDirection;
-                    }
-                    break;
-                case 'left':
-                    if (checkDirection(map, currentDirection, x, y, shipLength)) {
-                        return currentDirection;
-                    }
-                    break;
-                case 'right':
-                    if (checkDirection(map, currentDirection, x, y, shipLength)) {
-                        return currentDirection;
-                    }
-                    break;
-            }
-        }
-        return null;
-    };
-
-    //Разместить лодку на карте
-    var placeShipToMap = function(map, direction, x, y, shipLength, owner) {
-        var lastCoordinate;
-        var ship = [];
-        switch (direction) {
->>>>>>> c08beeb3edd0cf0349c9b6a2a91a07acea46d38b
             case 'top':
                 if (checkDirection(map, currentDirection, x, y, shipLength)) {
                     return currentDirection;
@@ -450,7 +328,6 @@ function SeaBattle(targetContainer, edge) {
                     return currentDirection;
                 }
                 break;
-<<<<<<< HEAD
             }
         }
         return null;
@@ -495,14 +372,6 @@ function SeaBattle(targetContainer, edge) {
                 map[x][y] = cellType.ship;
                 break;
             }
-=======
-            case 'single':
-                {
-                    ship.push([x, y]);
-                    map[x][y] = cellType.ship;
-                    break;
-                }
->>>>>>> c08beeb3edd0cf0349c9b6a2a91a07acea46d38b
         }
         //Добавляем в список кораблей игрока
         if (owner == players.Player) {
@@ -520,7 +389,7 @@ function SeaBattle(targetContainer, edge) {
     };
 
     //Создать карту размещения судов на поле
-    var makeMap = function(map, owner) {
+    var makeMap = function (map, owner) {
         for (var shipLength = 4; shipLength > 0; shipLength--) {
             for (var shipsCount = 1; shipsCount <= 5 - shipLength; shipsCount++) {
                 var notReady = true;
@@ -550,15 +419,10 @@ function SeaBattle(targetContainer, edge) {
     };
 
     //Найти ячейку с кораблем и удалить её из списка ячеек кораблей
-    var _hitShip = function(ships, x, y) {
+    var _hitShip = function (ships, x, y) {
         var bufferShips = ships;
-<<<<<<< HEAD
         var indexCoordinateX = 0
             , indexCoordinateY = 1;
-=======
-        var indexCoordinateX = 0,
-            indexCoordinateY = 1;
->>>>>>> c08beeb3edd0cf0349c9b6a2a91a07acea46d38b
         for (var i = 0; i < bufferShips.length; i++) {
             for (var shipCoordinateIndex = 0; shipCoordinateIndex < bufferShips[i].length; shipCoordinateIndex++) {
                 if (bufferShips[i][shipCoordinateIndex][indexCoordinateX] == x &&
@@ -577,7 +441,7 @@ function SeaBattle(targetContainer, edge) {
     };
 
     //Нарисуем промахи вокруг ячейки
-    var _drawMissesAroundCell = function(map, owner, cell_x, cell_y) {
+    var _drawMissesAroundCell = function (map, owner, cell_x, cell_y) {
         console.log(cell_x, cell_y);
         for (var x = -1; x <= 1; x++) {
             var coordinate_x = cell_x + x;
@@ -598,7 +462,7 @@ function SeaBattle(targetContainer, edge) {
     };
 
     //Получить координаты лодки, в которую входит данная ячейка
-    var getShipCoordinates = function(map, cell_x, cell_y) {
+    var getShipCoordinates = function (map, cell_x, cell_y) {
         var coordinates = [];
         for (var x = -1; x <= 1; x++) {
             var coordinate_x = cell_x + x;
@@ -642,7 +506,7 @@ function SeaBattle(targetContainer, edge) {
     };
 
     //Нарисовать промахи вокруг мертвого корабля
-    var drawMissesAroundDeadShip = function(map, owner, x, y) {
+    var drawMissesAroundDeadShip = function (map, owner, x, y) {
         var coordinates = getShipCoordinates(map, x, y);
         for (var i = 0; i < coordinates.length; i++) {
             _drawMissesAroundCell(map, owner, coordinates[i][0], coordinates[i][1]);
@@ -650,24 +514,19 @@ function SeaBattle(targetContainer, edge) {
     };
 
     //Обработка выстрела в списке кораблей игрока
-    var hitShip = function(target, x, y) {
+    var hitShip = function (target, x, y) {
         var shipsCount;
         var isDead;
         var message;
         if (target == players.Player) {
             shipsCount = playerShips.length;
             playerShips = _hitShip(playerShips, x, y);
-<<<<<<< HEAD
-            if (playerMap[x][y] == cellType.water) {
-                playerMap[x][y] = cellType.miss;
-            } else if (playerMap[x][y] == cellType.ship) {
-=======
             if (playerMap[x][y] == cellType.water){
                 playerMap[x][y] = cellType.miss;
-            }else if (playerMap[x][y] == cellType.ship)
->>>>>>> c08beeb3edd0cf0349c9b6a2a91a07acea46d38b
+            }
+            else if (playerMap[x][y] == cellType.ship){
                 playerMap[x][y] = cellType.dead;
-                isDead = shipsCount != playerShips.length;
+            isDead = shipsCount != playerShips.length;
             }
             if (isDead) {
                 message = 'Наш корабль уничтожен!';
@@ -684,17 +543,12 @@ function SeaBattle(targetContainer, edge) {
         } else if (target == players.Computer) {
             shipsCount = computerShips.length;
             computerShips = _hitShip(computerShips, x, y);
-<<<<<<< HEAD
-            if (computerMap[x][y] == cellType.water) {
-                computerMap[x][y] = cellType.miss;
-            } else if (computerMap[x][y] == cellType.ship) {
-=======
             if (computerMap[x][y] == cellType.water){
                 computerMap[x][y] = cellType.miss;
-            }else if (computerMap[x][y] == cellType.ship)
->>>>>>> c08beeb3edd0cf0349c9b6a2a91a07acea46d38b
+            }
+            else if (computerMap[x][y] == cellType.ship){
                 computerMap[x][y] = cellType.dead;
-                isDead = shipsCount != computerShips.length;
+            isDead = shipsCount != computerShips.length;
             }
             if (isDead) {
                 message = 'Мы уничтожили корабль противника!';
@@ -712,11 +566,7 @@ function SeaBattle(targetContainer, edge) {
     };
 
     //Выстрел компьтера
-<<<<<<< HEAD
     var computerShot = function () {
-=======
-    var computerShot = function() {
->>>>>>> c08beeb3edd0cf0349c9b6a2a91a07acea46d38b
         var targets = $('table#' + elementsIds.playerSea + ' td:not(.' + cssClasses.miss + ', .' + cssClasses.dead + ')[data-owner="' + players.Player + '"]');
         var targetIndex = getRandomIntBetween(0, targets.length - 1);
         var target = $(targets[targetIndex]);
@@ -729,7 +579,7 @@ function SeaBattle(targetContainer, edge) {
 
 
     //Обработка выстрела игрока
-    var fire = function(target, x, y) {
+    var fire = function (target, x, y) {
         if (!gameEnded) {
             if (target != players.Player) {
                 //Если уже попадал или мазал то ничего не делаем
@@ -751,7 +601,7 @@ function SeaBattle(targetContainer, edge) {
     };
 
     //отрисовать выстрел компьтера по координатам
-    var drawComputerShot = function(cell, x, y) {
+    var drawComputerShot = function (cell, x, y) {
         if (playerMap[x][y] == cellType.dead) {
             createMessage(getComputerName() + ' попал в ваш корабль! ' + getCellName(x, y) + ' горит!');
             cell.attr('class', cssClasses.cellDead);
@@ -763,7 +613,7 @@ function SeaBattle(targetContainer, edge) {
     };
 
     //Отрисовать выстрел игрока по координатам
-    var drawPlayerShot = function(cell, x, y) {
+    var drawPlayerShot = function (cell, x, y) {
         if (computerMap[x][y] == cellType.dead) {
             createMessage('Капитан, ' + getPlayerName() + ', цель ' + getCellName(x, y) + ' поражена!');
             cell.attr('class', cssClasses.cellDead);
@@ -774,7 +624,7 @@ function SeaBattle(targetContainer, edge) {
     };
 
     //Отрисовать выстрел в ячейку по координатам
-    var drawShot = function(target, x, y) {
+    var drawShot = function (target, x, y) {
         var cell = $('td[data-owner="' + target + '"][data-x="' + x + '"][data-y="' + y + '"]');
         if (target == players.Player) {
             drawComputerShot(cell, x, y);
@@ -784,13 +634,13 @@ function SeaBattle(targetContainer, edge) {
     };
 
     //Получить строковое имя ячейки
-    var getCellName = function(x, y) {
+    var getCellName = function (x, y) {
         //Английская А имеет код 64
         return String.fromCharCode(64 + y) + x;
     };
 
     //Получить ячейку с указанным классом
-    var _getTableCell = function(x, y, type, owner) {
+    var _getTableCell = function (x, y, type, owner) {
         var cell = $('<td>')
             .attr('id', elementsIds.cellIdPrefix + owner + '_' + x + '_' + y)
             .attr('data-owner', owner)
@@ -798,7 +648,7 @@ function SeaBattle(targetContainer, edge) {
             .attr('data-y', y)
             .attr('title', getCellName(x, y));
 
-        cell.click(function() {
+        cell.click(function () {
             fire(owner, x, y);
         });
 
@@ -820,7 +670,7 @@ function SeaBattle(targetContainer, edge) {
     };
 
     //Получить сформирвоанную таблицу с морем
-    var _getSea = function(seaId, owner, map, showBoats) {
+    var _getSea = function (seaId, owner, map, showBoats) {
         var seaContainer = $('<table>')
             .attr('id', seaId)
             .attr('class', cssClasses.sea);
@@ -846,7 +696,7 @@ function SeaBattle(targetContainer, edge) {
     };
 
     //Поместить поле боя в контейнер
-    var _drawSea = function(id, map, owner, target, showBoats) {
+    var _drawSea = function (id, map, owner, target, showBoats) {
         var sea = _getSea(id, owner, map, showBoats);
         target.empty();
         target.append(sea);
@@ -859,7 +709,7 @@ function SeaBattle(targetContainer, edge) {
     return {
 
         //Инициализация игры
-        init: function() {
+        init: function () {
             drawGameContainer(targetContainer);
             createMessage('Добро пожаловать в морской бой!');
             playerMap = makeMap(playerMap, players.Player);
