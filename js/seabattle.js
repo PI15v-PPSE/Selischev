@@ -62,7 +62,8 @@ function SeaBattle(targetContainer, edge) {
     var messagesArea;
     
 /**
-*@var computerMap, playerMap Карты полей боя игроков
+*@var computerMap Карты полей боя игроков
+*@var playerMap Карты полей боя игроков
 */
     var computerMap, playerMap;
 
@@ -73,11 +74,13 @@ function SeaBattle(targetContainer, edge) {
 
 /**
 *@var playerName, computerName имена игроков
+*@var computerName
 */     
     var playerName, computerName;
 
 /**
-*@var playerShips, computerShips Список кораблей и их координат у игроков
+*@var playerShips Список кораблей и их координат у игроков
+*@var computerShips
 */ 
     var playerShips, computerShips;
 
