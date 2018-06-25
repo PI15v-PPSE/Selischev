@@ -1,8 +1,7 @@
-'use strict';
-
-//TODO: Сделать выстрелы компьтера умнее
-
-//Новая версия j-Query не поддерживает addClass :(
+/**
+* Функция описывающая игру
+* 
+*/
 function SeaBattle(targetContainer, edge) {
     //Список css-классов
     var cssClasses = {
@@ -19,8 +18,9 @@ function SeaBattle(targetContainer, edge) {
         , cellWater: 'water'
         , cellMiss: 'miss'
     };
-
-    //Список идентификаторов
+/**
+*@var elementsIds cписок идентификаторов
+*/
     var elementsIds = {
         gameContainer: 'game_container'
         , playerName: 'player_name'
@@ -33,37 +33,52 @@ function SeaBattle(targetContainer, edge) {
         , cellIdPrefix: 'cell_'
         , rowIdPrefix: 'row_'
     };
-
-    //Список игроков
+/**
+*@var players cписок игроков
+*/
     var players = {
         Player: 'player'
         , Computer: 'computer'
     };
-
-    //Статусы ячеек на карте
+    
+/**
+*@var cellType Статусы ячеек на карте
+*/
     var cellType = {
         dead: 1
         , ship: 0
         , water: -1
         , miss: 2
     };
-
-    //Завершена ли игра
+    
+/**
+*@var gameEnded Завершена ли игра
+*/
     var gameEnded = false;
-
-    //Поле с сообщениями
+    
+/**
+*@var messagesArea поле с сообщениями
+*/
     var messagesArea;
-
-    //Карты полей боя игроков
+    
+/**
+*@var computerMap, playerMap Карты полей боя игроков
+*/
     var computerMap, playerMap;
 
-    //Лог выстрелов компьютера
+/**
+*@var computerShots лог выстрелов компьютера
+*/   
     var computerShots;
 
-    //Имена игроков
+/**
+*@var playerName, computerName имена игроков
+*/     
     var playerName, computerName;
 
-    //Список кораблей и их координат у игроков
+/**
+*@var playerShips, computerShips Список кораблей и их координат у игроков
+*/ 
     var playerShips, computerShips;
 
     //Список сторон, на которых можно расположить корабль
