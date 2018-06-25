@@ -1,6 +1,6 @@
 /**
  * Функция описывающая игру
- * 
+ *@function SeaBattle
  */
 function SeaBattle(targetContainer, edge) {
     //Список css-классов
